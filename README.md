@@ -1,21 +1,13 @@
-# EventApp
+Attributions:
 
-To start your Phoenix server:
+Code to find the bootstrap datepicker functionality:
+https://formden.com/blog/date-picker
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.setup`
-  * Install Node.js dependencies with `npm install` inside the `assets` directory
-  * Start Phoenix endpoint with `mix phx.server`
+Links to the different scripts used for datepicker are below:
+https://code.jquery.com/jquery-1.11.3.min.js
+https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js
+https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+Users and Events is based off off of the object creation examples from the photo_blog lecture by Nat Tuck. I based the User and Event object off of his User andPost object.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
-
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
-# event_app
+The code for the setup of the html files is also based off of the photo_blog example from lecture. The controllers, router, and session portions are all based off of Nat Tuck's code in photo_blog as well.
