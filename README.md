@@ -11,3 +11,11 @@ https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-
 Users and Events is based off off of the object creation examples from the photo_blog lecture by Nat Tuck. I based the User and Event object off of his User andPost object.
 
 The code for the setup of the html files is also based off of the photo_blog example from lecture. The controllers, router, and session portions are all based off of Nat Tuck's code in photo_blog as well.
+
+The deployment code is also based off of lecture deployments.
+
+
+DESIGN CHOICES
+// You must be logged in to create a new event. Otherwise there is an error
+// There is a home button that brings back to the event feed page
+// There is a column that shows who events were created by
