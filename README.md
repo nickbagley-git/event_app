@@ -28,4 +28,7 @@ DESIGN CHOICES
 // You must be logged in to create a new event. Otherwise there is an error
 // There is a home button that brings back to the event feed page
 // There is a column that shows who events were created by
+// There is the profile pic of every user under an event or comment related to them
+// The invites for the event are listed under the event
+// You are able to edit your own response if you have already made one on an event
 >>>>>>> ca5c787c1784998b70813caa74b55142d6dc4bfc
