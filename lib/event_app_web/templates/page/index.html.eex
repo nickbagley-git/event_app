@@ -1,5 +1,5 @@
 <div class = "row posts-container">
-  <p> This is hwere the phto go</p>
+<p>Profile pic</p>
   <%= for user <- @users do %>
     <%= if current_user_is?(@conn, user.id) do %>
       <% src = Routes.user_path(@conn, :photo, user) %>
