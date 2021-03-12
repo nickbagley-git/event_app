@@ -12,6 +12,8 @@ Users and Events is based off off of the object creation examples from the photo
 
 The code for the setup of the html files is also based off of the photo_blog example from lecture. The controllers, router, and session portions are all based off of Nat Tuck's code in photo_blog as well.
 
+The code for allowing photos to display and work in a production environment was also based off of the photo_blog example.
+
 The deployment code is also based off of lecture deployments.
 
 <<<<<<< HEAD
