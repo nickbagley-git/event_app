@@ -1,0 +1,9 @@
+
+<h1>Show Response</h1>
+
+<div>
+  <p>Response: <%= @response.body %></p>
+</div>
+
+<span><%= link "Edit", to: Routes.response_path(@conn, :edit, @response) %></span>
+<p><%= link "Home", to: Routes.page_path(@conn, :index) %></li>

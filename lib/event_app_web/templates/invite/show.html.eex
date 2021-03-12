@@ -1,0 +1,10 @@
+<p><%= link "Home", to: Routes.page_path(@conn, :index) %></li>
+<h1>Show Invite</h1>
+
+<div>
+  <p>Email: <%= @invite.body %></p>
+</div>
+
+<p>
+  <span><%= link "Back", to: Routes.event_path(@conn, :index) %></span>
+</p>

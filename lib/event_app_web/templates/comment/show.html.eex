@@ -1,0 +1,18 @@
+<p><%= link "Home", to: Routes.page_path(@conn, :index) %></li>
+<h1>Showing Comment</h1>
+
+<div>
+  <img src="<%= Routes.user_path(@conn, :photo, @comment.user_id) %>" alt="">
+</div>
+
+<div>
+  <p>Body: <%= @comment.body %></p>
+</div>
+
+<p>
+  <%= if current_user_is?(@conn, @comment.user_id) do %>
+    <span><%= link "Edit", to: Routes.comment_path(@conn, :edit, @comment) %></span>
+    <span><%= link "Delete", to: Routes.comment_path(@conn, :delete, @comment), method: :delete, data: [confirm: "Are you sure?"] %></span>
+  <% end %>
+  <span><%= link "Back", to: Routes.event_path(@conn, :index) %></span>
+</p>

@@ -3,6 +3,32 @@ defmodule EventAppWeb.EventController do
 
   alias EventApp.Events
   alias EventApp.Events.Event
+  alias EventAppWeb.Plugs
+  
+
+  plug Plugs.RequireUser when action not in [:index, :show]
+  plug :fetch_event when action in [:show, :edit, :update, :delete]
+  plug :require_owner when action in [:edit, :update, :delete]
+
+  def fetch_event(conn, _args) do
+    id = conn.params["id"]
+    event = Events.get_event!(id)
+    assign(conn, :event, event)
+  end
+
+  def require_owner(conn, _args) do
+    user = conn.assigns[:current_user]
+    event = conn.assigns[:event]
+
+    if user.id == event.user_id do
+      conn
+    else
+      conn
+      |> put_flash(:error, "You do not own this post.")
+      |> redirect(to: Routes.page_path(conn, :index))
+      |> halt()
+    end
+  end
 
   def index(conn, _params) do
     events = Events.list_events()
@@ -29,8 +55,28 @@ defmodule EventAppWeb.EventController do
   end
 
   def show(conn, %{"id" => id}) do
-    event = Events.get_event!(id)
-    render(conn, "show.html", event: event)
+    event = Events.load_comments(conn.assigns[:event])
+    |> Events.load_invites()
+    |> Events.load_responses()
+    comm = %EventApp.Comments.Comment{
+      event_id: event.id,
+      user_id: current_user_id(conn),
+    }
+    new_comment = EventApp.Comments.change_comment(comm)
+
+    inv = %EventApp.Invites.Invite{
+      event_id: event.id
+    }
+    new_invite = EventApp.Invites.change_invite(inv)
+
+    resp = %EventApp.Responses.Response{
+      event_id: event.id,
+      user_id: current_user_id(conn)
+    }
+    new_response = EventApp.Responses.change_response(resp)
+    render(conn, "show.html", event: event, new_comment: new_comment, new_invite: new_invite, new_response: new_response)
+    #event = Events.get_event!(id)
+    #render(conn, "show.html", event: event)
   end
 
   def edit(conn, %{"id" => id}) do

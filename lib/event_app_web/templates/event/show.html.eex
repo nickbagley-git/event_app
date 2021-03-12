@@ -1,9 +1,17 @@
+<p><%= link "Home", to: Routes.page_path(@conn, :index) %></li>
 <p>
-  <span><%= link "Edit", to: Routes.event_path(@conn, :edit, @event) %></span>
+  <%= if current_user_is?(@conn, @event.user_id) do %>
+    <span><%= link "Edit", to: Routes.event_path(@conn, :edit, @event) %></span>
+  <% end %>
   <span><%= link "Back", to: Routes.event_path(@conn, :index) %></span>
 </p>
 
 <h1>Showing <%= @event.name %></h1>
+
+<div>
+  <p>Event Owner: <%= current_user_name(@conn) %></p> 
+  <img src="<%= Routes.user_path(@conn, :photo, @event.user_id) %>" alt="">
+</div>
 
 <div>
   <p>Event Name: <%= @event.name %></p>
@@ -16,3 +24,76 @@
 <div>
   <p>Event Description: <%= @event.description %></p>
 </div>
+
+<%= for resp <- @event.responses do %>
+  <%= if current_user_is?(@conn, resp.user_id) do %>
+    <div class="card">
+      <div class="card-body">
+        <p>Your Response: <%= resp.body %></p>
+          <span><%= link "Edit", to: Routes.response_path(@conn, :edit, resp) %></span>
+      </div>
+    </div>
+  <% end %>
+<% end %>
+
+
+<%= if not current_user_is?(@conn, @event.user_id) do %>
+  <h2>Respond to Event</h2>
+  <%= render(
+    EventAppWeb.ResponseView,
+    "form.html",
+    changeset: @new_response,
+    action: Routes.response_path(@conn, :create)
+  ) %>
+<% end %>
+
+
+
+
+
+
+
+
+
+
+<h2>Add Comment</h2>
+<%= if have_current_user?(@conn) do %>
+  <%= render(
+    EventAppWeb.CommentView,
+    "form.html",
+    changeset: @new_comment,
+    action: Routes.comment_path(@conn, :create)
+  ) %>
+<% end %>
+
+<h2>Comments</h2>
+
+<%= for comm <- @event.comments do %>
+  <div class="card">
+    <div class="card-body">
+      <p>Posted by <%= comm.user.name %></p>
+      <p class="card-text"><%= comm.body %></p>
+
+      <%= if current_user_id(@conn) == comm.user_id do %>
+        <span><%= link "Edit", to: Routes.comment_path(@conn, :edit, comm) %></span>
+        <span><%= link "Delete", to: Routes.comment_path(@conn, :delete, comm), method: :delete, data: [confirm: "Are you sure?"] %></span>
+
+
+      <%= else %>
+        <%= if current_user_is?(@conn, @event.user_id) do %>
+          <span><%= link "Delete", to: Routes.comment_path(@conn, :delete, comm), method: :delete, data: [confirm: "Are you sure?"] %></span>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
+<%= if current_user_is?(@conn, @event.user_id) do %>
+  <h2>Add Invite</h2>
+  <%= render(
+    EventAppWeb.InviteView,
+    "form.html",
+    changeset: @new_invite,
+    action: Routes.invite_path(@conn, :create)
+  ) %>
+<% end %>

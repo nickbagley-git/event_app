@@ -1,12 +1,32 @@
+<div class = "row posts-container">
+  <p> This is hwere the phto go</p>
+  <%= for user <- @users do %>
+    <%= if current_user_is?(@conn, user.id) do %>
+      <% src = Routes.user_path(@conn, :photo, user) %>
+      <img class="card-img-top"
+           src="<%= src %>"
+           alt="">
+    <% end %>
+  <% end %>
+</div>
+
+
+
+
 <div class="row">
   <div class="col">
     <h1>Event Feed</h1>
-    <%= link "New Event", to: Routes.event_path(@conn, :new) %>
+    <%= if have_current_user?(@conn) do %>
+      <p>
+        <%= link("New Event", to: Routes.event_path(@conn, :new)) %>
+      </p>
+    <% end %>
   </div>
 </div>
 
 <div class="row">
   <%= for event <- @events do %>
+  <%= if current_user_is?(@conn, event.user_id) do %>
   <div class="col-sm-4 card">
     <div class="card-body">
       <p class="card-text"><%= event.name %></p>
@@ -14,5 +34,21 @@
       <%= link "view", to: Routes.event_path(@conn, :show, event) %>
     </div>
   </div>
+<% end %>
+    <%= for inv <- @invites do%>
+    <%= if inv.event_id == event.id do %>
+    <%= if current_user_email(@conn) == inv.name do %>
+      <div class="col-sm-4 card">
+        <div class="card-body">
+          <p class="card-text"><%= event.name %></p>
+          <p class="card-text"><%= event.date %></p>
+          <%= link "view", to: Routes.event_path(@conn, :show, event) %>
+        </div>
+      </div>
+   <%= else %>
+
+    <% end %>
+    <% end %>
+    <% end %>
   <% end %>
 </div>
